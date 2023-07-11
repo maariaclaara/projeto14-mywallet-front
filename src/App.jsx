@@ -4,10 +4,20 @@ import HomePage from "./pages/HomePage"
 import SignInPage from "./pages/SignInPage"
 import SignUpPage from "./pages/SignUpPage"
 import TransactionsPage from "./pages/TransactionPage"
+import UserContext from "./context/UserContext"
+import axios from "axios";
+import { useState } from "react"
 
 export default function App() {
+
+  axios.defaults.headers.common['Authorization'] = 'THS0ss3MBlhP2DCxy9431DYx';
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [email, setEmail] = useState(localStorage.getItem("email"));
+
+
   return (
     <PagesContainer>
+      <UserContext.Provider value={{ token, setToken, email, setEmail}}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignInPage />} />
@@ -16,6 +26,7 @@ export default function App() {
           <Route path="/nova-transacao/:tipo" element={<TransactionsPage />} />
         </Routes>
       </BrowserRouter>
+      </UserContext.Provider>
     </PagesContainer>
   )
 }
