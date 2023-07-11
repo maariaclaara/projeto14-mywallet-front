@@ -1,7 +1,7 @@
 import MyWalletLogo from "../components/MyWalletLogo";
-import userUp from "../hooks/userUp";
-import userIn from "../hooks/userIn";
-import { login } from "../URLs/promises";
+import userUp from "../hooks/UserUp";
+import userIn from "../hooks/UserIn";
+import { Login } from "../URLs/Promises";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -9,34 +9,37 @@ import { Link } from "react-router-dom";
 export default function SignInPage() {
 
   const { form, changeForm } = userUp({ email: "", password: "" });
-  const userLogin = login();
+  const userLogin = Login();
   userIn();
 
-  function submit(e) {
+  function submitLogin(e) {
     e.preventDefault();
     userLogin(form);
   }
 
   return (
     <SingInContainer>
-      <form onSubmit={submit}>
+      <form onSubmit={submitLogin}>
         <MyWalletLogo />
 
         <input 
+         data-test="email"
          placeholder="Email"
          type="email"
          value={form.email}
          onChange={changeForm}
          required />
 
-        <input placeholder="Senha" 
+        <input 
+        data-test="password"
+        placeholder="Senha" 
         type="password" 
         minLength={3}
         value={form.password}
         onChange={changeForm}
         required/>
 
-        <button type="submit">Entrar</button>
+        <button data-test="sign-in-submit" type="submit">Entrar</button>
       </form>
 
       <Link to="/cadastro">
